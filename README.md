@@ -10,14 +10,14 @@ composer require pronist/tistory
 
 # Getting started
 
-## Redirect Permission Page
+### Redirect Permission Page
 
 ```php
 $redirectUrl = Tistory\Auth::getPermissionUrl('__CLIENT_ID__', '__REDIRECT_URI__');
 header("Location: $redirectUrl");
 ```
 
-## OAuth2 Authentication
+### OAuth2 Authentication
 
 ```php
 use Tistory\Exceptions\AuthenticationException;
@@ -38,7 +38,7 @@ catch(AuthenticationException $e) {
 }
 ```
 
-## Request
+### Request
 
 ```php
 use Tistory\Exceptions\BadResponseException;
@@ -55,7 +55,7 @@ catch(BadResponseException $e) {
 ```
 
 
-## FileUplaod
+### FileUplaod
 
 ```php
 use Tistory\Exceptions\FileUploadException;
@@ -76,7 +76,7 @@ catch(FileUploadException $e) {
 
 # Namespace
 
-## Tistory API
+### Tistory API
 
 |Namespace|description|
 ----------|-----------|
@@ -86,7 +86,7 @@ catch(FileUploadException $e) {
 |**Tistory\Comment**| Tistory Comment API
 |**Tistory\Post**| Tistory Post API
 
-## Exceptions
+### Exceptions
 
 |Namespace|description|
 ----------|-----------|
@@ -96,26 +96,26 @@ catch(FileUploadException $e) {
 
 # Methods
 
-## Tistory\Auth
+### Tistory\Auth
 
 |Name|description|
 -----|-----------|
 |**Tistory\Auth::getPermissionUrl($clientId, $redirectUri)**| Getting permission redirect url
 |**Tistory\Auth::getAccessToken($clientId, $clientSecret, $redirectUri, $code)**| Tistory OAuth2 Access Token
 
-## Tistory\Blog
+### Tistory\Blog
 
 |Name|description|
 -----|-----------|
 |**Tistory\Blog::info($access_token, $options = [])**| Getting Tistory blog info
 
-## Tistory\Category
+### Tistory\Category
 
 |Name|description|
 -----|-----------|
 |**Tistory\Category::list($access_token, $options = [])**| Getting Tistory category list
 
-## Tistory\Comment
+### Tistory\Comment
 
 |Name|description|
 -----|-----------|
@@ -125,7 +125,7 @@ catch(FileUploadException $e) {
 |**Tistory\Comment::modify($access_token, $options = [])**| Modifying a comment
 |**Tistory\Comment::delete($access_token, $options = [])**| Deleting a comment
 
-## Tistory\Post
+### Tistory\Post
 
 |Name|description|
 -----|-----------|
