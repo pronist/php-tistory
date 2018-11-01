@@ -1,0 +1,24 @@
+{
+    "name": "pronist/tistory",
+    "version": "1.0.0",
+    "description": "Tistory API for PHP application",
+    "type": "library",
+    "keywords": ["php", "tistory", "api"],
+    "homepage": "https://github.com/pronist/php-tistory",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "php" : ">=7.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mansu Jeong",
+            "email": "pronist@naver.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tistory\\": "src/"
+        }
+    }
+}
