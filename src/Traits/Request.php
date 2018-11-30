@@ -82,8 +82,7 @@ trait Request
                     throw new FileUploadException("The file ${filename} upload failed.", 400);
                 }
                 else {
-                    $response = (object) json_decode($e->getResponse()->getBody(), true)['tistory'];
-                    throw new BadResponseException($response->error_message, $response->status);
+                    throw new BadResponseException("Bad request", 400);
                 }
             }
         }
