@@ -1,6 +1,6 @@
 {
     "name": "pronist/tistory",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Tistory API for PHP application",
     "type": "library",
     "keywords": ["php", "tistory", "api"],
