@@ -75,7 +75,7 @@ class Post
     *
     * @return stdClass
     */
-    public static function attach(string $access_token, array $options = [], string $filename = null) 
+    public static function attach(string $access_token, array $options = [], string $filename) 
     {
         return self::request('post', 'post/attach', $access_token, $options, $filename);
     }
