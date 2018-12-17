@@ -6,7 +6,6 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 
 use Tistory\Traits\Request;
-use Tistory\Traits\Token;
 
 use Tistory\Exceptions\AuthenticationException;
 
