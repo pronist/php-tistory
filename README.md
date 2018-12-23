@@ -46,7 +46,7 @@ try {
     if($access_token) {
         $response = Tistory\Post::attach($access_token, [
             'blogName' => '__BLOG_NAME__',
-            'uploadedfile' => 'uploadedfile' => fopen('__FILE_PATH__', 'r')
+            'uploadedfile' => fopen('__FILE_PATH__', 'r')
         ]);
         echo $response->url;
     }
