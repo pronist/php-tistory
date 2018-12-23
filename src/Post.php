@@ -9,7 +9,7 @@ use Tistory\Traits\Request;
  * @method stdClass read($access_token, $options = [])
  * @method stdClass write($access_token, $options = [])
  * @method stdClass modify($access_token, $options = [])
- * @method stdClass attach($access_token, $options = [], $filename = null)
+ * @method stdClass attach($access_token, $options = [])
  */
 class Post 
 {
@@ -75,8 +75,8 @@ class Post
     *
     * @return stdClass
     */
-    public static function attach(string $access_token, array $options = [], string $filename) 
+    public static function attach(string $access_token, array $options = []) 
     {
-        return self::request('post', 'post/attach', $access_token, $options, $filename);
+        return self::request('post', 'post/attach', $access_token, $options);
     }
 }

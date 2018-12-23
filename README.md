@@ -22,10 +22,9 @@ header("Location: $redirectUrl");
 ```php
 use Tistory\Exceptions\AuthenticationException;
 
-$code = $_GET['code'];
-$access_token = null;
-
 try {
+    $code = $_GET['code'];
+
     $access_token = Tistory\Auth::getAccessToken(        
         '__CLIENT_ID__',
         '__CLIENT_SECRET__',
@@ -45,31 +44,14 @@ use Tistory\Exceptions\BadResponseException;
 
 try {
     if($access_token) {
-        $user = Tistory\Blog::info($access_token);
-        echo $user->id;
+        $response = Tistory\Post::attach($access_token, [
+            'blogName' => '__BLOG_NAME__',
+            'uploadedfile' => 'uploadedfile' => fopen('__FILE_PATH__', 'r')
+        ]);
+        echo $response->url;
     }
 }
 catch(BadResponseException $e) {
-    echo $e->getMessage();
-}
-```
-
-
-### FileUplaod
-
-```php
-use Tistory\Exceptions\FileUploadException;
-
-try {
-    if($access_token) {
-        $file = Tistory\Post::attach($access_token, [
-            'blogName' => '__BLOG_NAME__'
-        ], '__FILE_PATH__');
-
-        echo $file->url;
-    }
-}
-catch(FileUploadException $e) {
     echo $e->getMessage();
 }
 ```
@@ -92,7 +74,6 @@ catch(FileUploadException $e) {
 ----------|-----------|
 |**Tistory\Exceptions\AuthenticationException**| OAuth2 Authentication
 |**Tistory\Exceptions\BadResponseException**| Bad Response
-|**Tistory\Exceptions\FileUploadException**| File Upload
 
 # Methods
 
@@ -133,7 +114,7 @@ catch(FileUploadException $e) {
 |**Tistory\Post::read($access_token, $options = [])**| Reading a post
 |**Tistory\Post::write($access_token, $options = [])**| Writing a post
 |**Tistory\Post::modify($access_token, $options = [])**| Modifying a post
-|**Tistory\Post::attach($access_token, $options = [], $filename = null)**| Attaching a file
+|**Tistory\Post::attach($access_token, $options = [])**| Attaching a file
 
 # Reference
 

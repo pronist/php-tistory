@@ -9,10 +9,9 @@ use Tistory\Exceptions\BadResponseException;
 use Tistory\Exceptions\FileUploadException;
 
 /**
- * @method stdClass getOptions($accessToken, $query = [], $filename = null)
  * @method stdClass get($url, $accessToken, $query = [])
- * @method stdClass post($url, $accessToken, $query = [], $filename = null)
- * @method stdClass request($method, $url, $accessToken, $query = [], $filename = null)
+ * @method stdClass post($url, $accessToken, $query = [])
+ * @method stdClass request($method, $url, $accessToken, $query = [])
  */
 trait Request
 {
@@ -22,41 +21,7 @@ trait Request
     public static $httpClient;
 
    /**
-    * Getting request options
-    *
-    * @param string $accessToken
-    * @param array $query
-    * @param string $filename
-    *
-    * @return array
-    */
-    public static function getOptions(
-        string $accessToken, 
-        array $query = [], 
-        string $filename = null)
-    {
-        $requestOptions = [
-            'query' => array_merge([
-                'access_token' => $accessToken,
-                'output' => 'json',
-            ], $query)
-        ];
-        if($filename) {
-            /** file upload? */
-            $requestOptions = array_merge($requestOptions, [
-                'multipart' => [
-                    [
-                        'name' => 'uploadedfile',
-                        'contents' => fopen($filename, 'r')
-                    ]
-                ]
-            ]);
-        }
-        return $requestOptions;
-    }
-
-   /**
-    * Get
+    * Get Request
     *
     * @param string $url
     * @param string $accessToken
@@ -70,10 +35,16 @@ trait Request
         array $query = [])
     {
         try {
+            $requestOptions = array_merge([
+                'query' => [
+                    'access_token' => $accessToken,
+                    'output' => 'json'
+                ]
+            ], $query);
             $response = json_decode(
                 Request::$httpClient->get(
                     $url, 
-                    Request::getOptions($accessToken, $query)
+                    $requestOptions
                 )->getBody(), true)
             ;
             return (object) $response['tistory']['item'];
@@ -86,26 +57,40 @@ trait Request
     }
 
    /**
-    * Post
+    * Post Request
     *
     * @param string $url
     * @param string $accessToken
     * @param array $query
-    * @param string $filename
     *
     * @return stdClass
     */
     public static function post(
         string $url,
         string $accessToken,
-        array $query = [],
-        string $filename = null)
+        array $query = [])
     {
         try {
+            $requestOptions = [
+                [
+                    'name' => 'access_token',
+                    'contents' => $accessToken
+                ],
+                [
+                    'name' => 'output',
+                    'contents' => 'json'
+                ]
+            ];
+            foreach($query as $name => $contents) {
+                array_push($requestOptions, [
+                    'name' => $name,
+                    'contents' => $contents
+                ]);
+            }
             $response = json_decode(
-                Request::$httpClient->post(
-                    $url, 
-                    Request::getOptions($accessToken, $query, $filename)
+                Request::$httpClient->post($url, [
+                    'multipart' => $requestOptions
+                ]
                 )->getBody(), true)
             ;
             $result = [];
@@ -120,12 +105,7 @@ trait Request
         }
         catch (RequestException $e) {
             if ($e->hasResponse()) {
-                if($filename) {
-                    throw new FileUploadException("The file ${filename} upload failed.", 400);
-                }
-                else {
-                    throw new BadResponseException("Bad request", 400);
-                }
+                throw new BadResponseException("Bad Request", 400);
             }
         }
     }
@@ -137,7 +117,6 @@ trait Request
     * @param string $url
     * @param string $accessToken
     * @param array $query
-    * @param string $filename
     *
     * @return stdClass
     */
@@ -145,10 +124,9 @@ trait Request
         string $method, 
         string $url,
         string $accessToken,
-        array $query = [],
-        string $filename = null)
+        array $query = [])
     {
-        return Request::$method($url, $accessToken, $query, $filename);
+        return Request::$method($url, $accessToken, $query);
     }
 }
 
