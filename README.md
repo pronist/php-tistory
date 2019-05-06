@@ -1,4 +1,4 @@
-# php-tistory
+# tistory-php
 
 Tistory API for PHP application
 
@@ -10,111 +10,236 @@ composer require pronist/tistory
 
 # Getting started
 
-### Redirect Permission Page
-
 ```php
-$redirectUrl = Tistory\Auth::getPermissionUrl('__CLIENT_ID__', '__REDIRECT_URI__');
-header("Location: $redirectUrl");
-```
-
-### OAuth2 Authentication
-
-```php
-use Tistory\Exceptions\AuthenticationException;
-
-try {
-    $code = $_GET['code'];
-
+$code = $_GET['code'];
+if($code) {
     $access_token = Tistory\Auth::getAccessToken(        
         '__CLIENT_ID__',
         '__CLIENT_SECRET__',
         '__REDIRECT_URI__',
         $code // Authentication code
     );
+    print_r(Tistory\Blog::info($access_token));
 }
-catch(AuthenticationException $e) {
-    echo $e->getDescription();
+else {
+    $redirectUrl = Tistory\Auth::getPermissionUrl(
+        '__CLIENT_ID__', 
+        '__REDIRECT_URI__',
+        'code'
+    );
+    header("Location: $redirectUrl");
 }
 ```
 
-### Request
+# Authentication
+
+### Tistory\Auth::getPermissionUrl(string $clientId, string $redirectUri, string $state = null)
+
+Return tistory permission Url for **Authorization**
+
+#### Parameters
+
+* clientId: Tistory API client id
+* redirectUri: Tistory API redirect uri
+* responseType: 'code', or 'token'
+* state: CSRF Token
+
+#### Usage
 
 ```php
-use Tistory\Exceptions\BadResponseException;
-
-try {
-    if($access_token) {
-        $response = Tistory\Post::attach($access_token, [
-            'blogName' => '__BLOG_NAME__',
-            'uploadedfile' => fopen('__FILE_PATH__', 'r')
-        ]);
-        echo $response->url;
-    }
-}
-catch(BadResponseException $e) {
-    echo $e->getMessage();
-}
+$redirectUrl = Tistory\Auth::getPermissionUrl(
+    '__CLIENT_ID__', 
+    '__REDIRECT_URI__',
+    'code'
+);
 ```
 
-# Namespace
+### Tistory\Auth::getAccessToken(string $clientId, string $clientSecret, string $redirectUri, string $code)
 
-### Tistory API
+Request ```https://www.tistory.com/oauth/access_token```
 
-|Namespace|description|
-----------|-----------|
-|**Tistory\Auth**| OAuth2 Authentication
-|**Tistory\Blog**| Tistory Blog API
-|**Tistory\Category**| Tistory Category API
-|**Tistory\Comment**| Tistory Comment API
-|**Tistory\Post**| Tistory Post API
+#### Parameters
 
-### Exceptions
+* clientId: Tistory API client id
+* clientSecret: Tistory API client secret
+* redirectUri: Tistory API redirect uri
+* code: Access Token request code
 
-|Namespace|description|
-----------|-----------|
-|**Tistory\Exceptions\AuthenticationException**| OAuth2 Authentication
-|**Tistory\Exceptions\BadResponseException**| Bad Response
+#### Usage
 
-# Methods
+```php
+$response = Tistory\Auth::getAccessToken(
+    '__TISTORY_CLIENT_ID__',
+    '__TISTORY_CLIENT_SECRET__',
+    '__TISTORY_CALLBACK__',
+    $code
+);
+```
 
-### Tistory\Auth
+# Tistory API
 
-|Name|description|
------|-----------|
-|**Tistory\Auth::getPermissionUrl($clientId, $redirectUri)**| Getting permission redirect url
-|**Tistory\Auth::getAccessToken($clientId, $clientSecret, $redirectUri, $code)**| Tistory OAuth2 Access Token
+#### Parameters
 
-### Tistory\Blog
+* access_token: Tistory Access Token
+* options: Tistory API request parameters
 
-|Name|description|
------|-----------|
-|**Tistory\Blog::info($access_token, $options = [])**| Getting Tistory blog info
+### Tistory\Blog::info(string $access_token, array $options = [])
 
-### Tistory\Category
+Getting Tistory blog info
 
-|Name|description|
------|-----------|
-|**Tistory\Category::list($access_token, $options = [])**| Getting Tistory category list
+#### Usage
 
-### Tistory\Comment
+```php
+$response = Tistory\Blog::info($access_token);
+```
 
-|Name|description|
------|-----------|
-|**Tistory\Comment::newest($access_token, $options = [])**| Getting newest comments
-|**Tistory\Comment::list($access_token, $options = [])**| Getting comments list
-|**Tistory\Comment::write($access_token, $options = [])**| Writing a comment
-|**Tistory\Comment::modify($access_token, $options = [])**| Modifying a comment
-|**Tistory\Comment::delete($access_token, $options = [])**| Deleting a comment
+### Tistory\Category::list(string $access_token, array $options = [])
 
-### Tistory\Post
+Getting Tistory category list
 
-|Name|description|
------|-----------|
-|**Tistory\Post::list($access_token, $options = [])**| Getting posts list
-|**Tistory\Post::read($access_token, $options = [])**| Reading a post
-|**Tistory\Post::write($access_token, $options = [])**| Writing a post
-|**Tistory\Post::modify($access_token, $options = [])**| Modifying a post
-|**Tistory\Post::attach($access_token, $options = [])**| Attaching a file
+#### Usage
+
+```php
+$response = Tistory\Category::list($access_token, [
+    'blogName' => 'example'
+]);
+```
+
+### Tistory\Comment::newest(string $access_token, array $options = [])
+
+Getting newest comments
+
+#### Usage
+
+```php
+$response = Tistory\Comment::newest($access_token, [
+    'blogName' => 'example',
+    'page' => '1',
+    'count' => '10'
+]);
+```
+
+### Tistory\Comment::list(string $access_token, array $options = [])
+
+Getting comments list
+
+#### Usage
+
+```php
+$response = Tistory\Comment::list($access_token, [
+    'blogName' => 'example',
+    'postId' => '1',
+]);
+```
+
+### Tistory\Comment::write(string $access_token, array $options = [])
+
+Writing a comment
+
+#### Usage
+
+```php
+$response = Tistory\Comment::write($access_token, [
+    'blogName' => 'example',
+    'page' => '1',
+    'content' => 'Hello, world!'
+]);
+```
+
+### Tistory\Comment::modify(string $access_token, array $options = [])
+
+Modifying a comment
+
+#### Usage
+
+```php
+$response = Tistory\Comment::modify($access_token, [
+    'blogName' => 'example',
+    'postId' => '1',
+    'commentId' => '1',
+    'content' => 'Hello, world!'
+]);
+```
+
+### Tistory\Comment::delete(string $access_token, array $options = [])
+
+Deleting a comment
+
+#### Usage
+
+```php
+$response = Tistory\Comment::delete($access_token, [
+    'blogName' => 'example',
+    'postId' => '1',
+    'commentId' => '1'
+]);
+```
+
+### Tistory\Post::list(string $access_token, array $options = [])
+
+Getting posts list
+
+#### Usage
+
+```php
+$response = Tistory\Post::list($access_token, [
+    'blogName' => 'example',
+    'page' => '1'
+]);
+```
+
+### Tistory\Post::read(string $access_token, array $options = [])
+
+Reading a post
+
+#### Usage
+
+```php
+$response = Tistory\Post::read($access_token, [
+    'blogName' => 'example',
+    'postId' => '1'
+]);
+```
+
+### Tistory\Post::write(string $access_token, array $options = [])
+
+Writing a post
+
+#### Usage
+
+```php
+$response = Tistory\Post::write($access_token, [
+    'blogName' => 'example',
+    'title' => 'Hello, world!'
+]);
+```
+
+### Tistory\Post::modify(string $access_token, array $options = [])
+
+Modifying a post
+
+#### Usage
+
+```php
+$response = Tistory\Post::modify($access_token, [
+    'blogName' => 'example',
+    'postId' => '1',
+    'title' => 'Hello, world!'
+]);
+```
+
+### Tistory\Post::attach(string $access_token, array $options = [])
+
+Attaching a file
+
+#### Usage
+
+```php
+$response = Tistory\Post::attach($access_token, [
+    'blogName' => 'example',
+    'uploadedfile' => fopen('preview.jpg', 'r')
+]);
+```
 
 # Reference
 

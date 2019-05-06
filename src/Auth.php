@@ -7,8 +7,6 @@ use GuzzleHttp\Exception\RequestException;
 
 use Tistory\Traits\Request;
 
-use Tistory\Exceptions\AuthenticationException;
-
 /**
  * @method string getPermissionUrl($clientId, $redirectUri)
  * @method string getAccessToken($clientId, $clientSecret, $redirectUri, $code)
@@ -25,13 +23,17 @@ class Auth
     *
     * @return string
     */
-    public static function getPermissionUrl(string $clientId, string $redirectUri, string $state = null)
+    public static function getPermissionUrl(
+        string $clientId, 
+        string $redirectUri, 
+        string $responseType, 
+        string $state = null)
     {
         $query = http_build_query([
             "client_id" => $clientId,
             "redirect_uri" => $redirectUri,
             "state" => $state,
-            "response_type" => "code"
+            "response_type" => $responseType
         ]);
         return "https://www.tistory.com/oauth/authorize/?$query";
     }
@@ -66,14 +68,7 @@ class Auth
         }
         catch (RequestException $e) {
             if ($e->hasResponse()) {
-                $response = Psr7\str($e->getResponse());
-                $error = [];
-                preg_match("/error\=(.*)\&error_description\=(.*)$/", $response, $error);
-                throw new AuthenticationException(
-                    $error[1], // error
-                    $error[2], // error_description
-                    400 // status
-                );
+                echo Psr7\str($e->getResponse());
             }
         }
     }

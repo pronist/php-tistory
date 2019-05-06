@@ -1,10 +1,10 @@
 {
     "name": "pronist/tistory",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Tistory API for PHP application",
     "type": "library",
     "keywords": ["php", "tistory", "api"],
-    "homepage": "https://github.com/pronist/php-tistory",
+    "homepage": "https://github.com/tidory/tistory-php",
     "require": {
         "guzzlehttp/guzzle": "^6.3",
         "php" : ">=7.0"

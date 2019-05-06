@@ -5,9 +5,6 @@ namespace Tistory\Traits;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 
-use Tistory\Exceptions\BadResponseException;
-use Tistory\Exceptions\FileUploadException;
-
 /**
  * @method stdClass get($url, $accessToken, $query = [])
  * @method stdClass post($url, $accessToken, $query = [])
@@ -51,7 +48,7 @@ trait Request
         }
         catch (RequestException $e) {
             if ($e->hasResponse()) {
-                throw new BadResponseException("Bad request", 400);
+                echo Psr7\str($e->getResponse());
             }
         }
     }
@@ -105,7 +102,7 @@ trait Request
         }
         catch (RequestException $e) {
             if ($e->hasResponse()) {
-                throw new BadResponseException("Bad Request", 400);
+                echo Psr7\str($e->getResponse());
             }
         }
     }
