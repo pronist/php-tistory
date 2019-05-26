@@ -1,10 +1,10 @@
 {
     "name": "pronist/tistory",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Tistory API for PHP application",
     "type": "library",
     "keywords": ["php", "tistory", "api"],
-    "homepage": "https://github.com/tidory/tistory-php",
+    "homepage": "https://github.com/pronist/tistory",
     "require": {
         "guzzlehttp/guzzle": "^6.3",
         "php" : ">=7.0"
@@ -18,7 +18,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Tistory\\": "src/"
+            "Pronist\\Tistory\\": "src/"
         }
     }
 }

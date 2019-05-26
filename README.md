@@ -1,4 +1,4 @@
-# tistory-php
+# tistory
 
 Tistory API for PHP application
 
@@ -11,6 +11,10 @@ composer require pronist/tistory
 # Getting started
 
 ```php
+require "vendor/autoload.php";
+
+use Pronist\Tistory;
+
 $code = $_GET['code'];
 if($code) {
     $access_token = Tistory\Auth::getAccessToken(        

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tistory;
+namespace Pronist\Tistory;
 
 use Tistory\Traits\Request;
 

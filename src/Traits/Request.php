@@ -1,6 +1,6 @@
 <?php
 
-namespace Tistory\Traits;
+namespace Pronist\Tistory\Traits;
 
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
