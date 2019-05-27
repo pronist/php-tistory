@@ -2,7 +2,7 @@
 
 namespace Pronist\Tistory;
 
-use Tistory\Traits\Request;
+use Pronist\Tistory\Traits\Request;
 
 /**
  * @method stdClass newest($access_token, $options = [])

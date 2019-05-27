@@ -5,7 +5,7 @@ namespace Pronist\Tistory;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 
-use Tistory\Traits\Request;
+use Pronist\Tistory\Traits\Request;
 
 /**
  * @method string getPermissionUrl($clientId, $redirectUri)
