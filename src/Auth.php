@@ -6,14 +6,14 @@ use GuzzleHttp\Psr7;
 
 class Auth
 {
-   /**
-    * Getting permission redirect url
-    *
-    * @param string $clientId
-    * @param string $redirectUri
-    *
-    * @return string
-    */
+    /**
+     * Getting permission redirect url
+     *
+     * @param string $clientId
+     * @param string $redirectUri
+     *
+     * @return string
+     */
     public static function getPermissionUrl(string $clientId, string $redirectUri, string $responseType, string $state = null)
     {
         $query = http_build_query([
@@ -25,16 +25,16 @@ class Auth
         return "https://www.tistory.com/oauth/authorize/?$query";
     }
 
-   /**
-    * Getting Tistory OAuth2 Access Token
-    *
-    * @param string $clientId
-    * @param string $clientSecret
-    * @param string $redirectUri
-    * @param string $code
-    *
-    * @return string
-    */
+    /**
+     * Getting Tistory OAuth2 Access Token
+     *
+     * @param string $clientId
+     * @param string $clientSecret
+     * @param string $redirectUri
+     * @param string $code
+     *
+     * @return string
+     */
     public static function getAccessToken(string $clientId, string $clientSecret, string $redirectUri, string $code)
     {
         $httpClient = new \GuzzleHttp\Client([ 'verify' => false ]);
