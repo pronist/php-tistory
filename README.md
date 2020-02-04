@@ -81,7 +81,8 @@ $response = Tistory\Auth::getAccessToken(
 
 ## Tistory API
 
-You can use a same way associated classes such as ```Tistory\_CATEGORY::__METHOD__(string $accessToken, array $options = []): string```.
+You can use a same way associated classes like this; \
+```Tistory\__CATEGORY__::__METHOD__(string $accessToken, array $options = []): string```
 
 * accessToken: Tistory Access Token
 * options: Tistory API request parameters
@@ -97,6 +98,6 @@ You can use a same way associated classes such as ```Tistory\_CATEGORY::__METHOD
 
 ## License
 
-[MIT](https://github.com/pronist/tistory/blob/basic/LICENSE)
+[MIT](https://github.com/pronist/tistory/blob/master/LICENSE)
 
 Copyright 2020. [SangWoo Jeong](https://github.com/pronist). All rights reserved.
