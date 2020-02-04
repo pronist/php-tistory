@@ -6,20 +6,20 @@ use GuzzleHttp\Psr7;
 
 trait Request
 {
-   /**
-    * @var string $httpClient GuzzleHttp Client
-    */
+    /**
+     * @var string $httpClient GuzzleHttp Client
+     */
     private static $httpClient;
 
-   /**
-    * Get Request
-    *
-    * @param string $url
-    * @param string $accessToken
-    * @param array $query
-    *
-    * @return stdClass
-    */
+    /**
+     * Get Request
+     *
+     * @param string $url
+     * @param string $accessToken
+     * @param array $query
+     *
+     * @return stdClass
+     */
     private function get(string $url, string $accessToken, array $query = [])
     {
         return (string) self::$httpClient->get(
@@ -32,15 +32,15 @@ trait Request
         )->getBody();
     }
 
-   /**
-    * Post Request
-    *
-    * @param string $url
-    * @param string $accessToken
-    * @param array $query
-    *
-    * @return stdClass
-    */
+    /**
+     * Post Request
+     *
+     * @param string $url
+     * @param string $accessToken
+     * @param array $query
+     *
+     * @return stdClass
+     */
     private static function post(string $url, string $accessToken, array $query = [])
     {
         $requestOptions = [];
@@ -62,16 +62,16 @@ trait Request
         )->getBody();
     }
 
-   /**
-    * Tistory API Request
-    *
-    * @param string $method
-    * @param string $url
-    * @param string $accessToken
-    * @param array $query
-    *
-    * @return stdClass
-    */
+    /**
+     * Tistory API Request
+     *
+     * @param string $method
+     * @param string $url
+     * @param string $accessToken
+     * @param array $query
+     *
+     * @return stdClass
+     */
     private static function request(string $method, string $url, string $accessToken, array $query = [])
     {
         if (empty(self::$httpClient)) {
