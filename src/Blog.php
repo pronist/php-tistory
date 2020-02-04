@@ -4,13 +4,10 @@ namespace Pronist\Tistory;
 
 use Pronist\Tistory\Traits\Request;
 
-/**
- * @method stdClass info($access_token, $options = [])
- */
-class Blog 
+class Blog
 {
     use Request;
-    
+
    /**
     * Getting Tistory blog info
     *
@@ -19,8 +16,8 @@ class Blog
     *
     * @return stdClass
     */
-    public static function info(string $access_token, array $options = []) 
+    public static function info(string $accessToken, array $options = [])
     {
-        return self::request('get', 'blog/info', $access_token, $options);
+        return self::request('get', 'blog/info', $accessToken, $options);
     }
 }

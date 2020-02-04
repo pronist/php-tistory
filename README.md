@@ -1,14 +1,19 @@
-# tistory
+# Tistory API for PHP
 
-Tistory API for PHP application
+<p>
+    <img src="https://travis-ci.com/pronist/tistory.svg?branch=master">
+    <img src="https://github.styleci.io/repos/155703406/shield?branch=master" alt="StyleCI">
+</p>
 
-# Installation
+This is a library for **Tistory API with PHP**. You can reference [Tistory API](https://tistory.github.io/document-tistory-apis/) for using this library.
+
+## Installation
 
 ```bash
 composer require pronist/tistory
 ```
 
-# Getting started
+## Getting started
 
 ```php
 require "vendor/autoload.php";
@@ -16,18 +21,20 @@ require "vendor/autoload.php";
 use Pronist\Tistory;
 
 $code = $_GET['code'];
-if($code) {
-    $access_token = Tistory\Auth::getAccessToken(        
+
+if ($code) {
+    $accessToken = Tistory\Auth::getAccessToken(
         '__CLIENT_ID__',
         '__CLIENT_SECRET__',
         '__REDIRECT_URI__',
         $code // Authentication code
     );
-    print_r(Tistory\Blog::info($access_token));
-}
-else {
+    Tistory\Blog::info($accessToken, [
+        'output' => 'json'
+    ]);
+} else {
     $redirectUrl = Tistory\Auth::getPermissionUrl(
-        '__CLIENT_ID__', 
+        '__CLIENT_ID__',
         '__REDIRECT_URI__',
         'code'
     );
@@ -35,24 +42,20 @@ else {
 }
 ```
 
-# Authentication
+## Authentication
 
 ### Tistory\Auth::getPermissionUrl(string $clientId, string $redirectUri, string $state = null)
 
 Return tistory permission Url for **Authorization**
-
-#### Parameters
 
 * clientId: Tistory API client id
 * redirectUri: Tistory API redirect uri
 * responseType: 'code', or 'token'
 * state: CSRF Token
 
-#### Usage
-
 ```php
 $redirectUrl = Tistory\Auth::getPermissionUrl(
-    '__CLIENT_ID__', 
+    '__CLIENT_ID__',
     '__REDIRECT_URI__',
     'code'
 );
@@ -62,189 +65,38 @@ $redirectUrl = Tistory\Auth::getPermissionUrl(
 
 Request ```https://www.tistory.com/oauth/access_token```
 
-#### Parameters
-
 * clientId: Tistory API client id
 * clientSecret: Tistory API client secret
 * redirectUri: Tistory API redirect uri
-* code: Access Token request code
-
-#### Usage
+* code: Authentication code
 
 ```php
 $response = Tistory\Auth::getAccessToken(
     '__TISTORY_CLIENT_ID__',
     '__TISTORY_CLIENT_SECRET__',
     '__TISTORY_CALLBACK__',
-    $code
+    $code // Authentication code
 );
 ```
 
-# Tistory API
+## Tistory API
 
-#### Parameters
+You can use a same way associated classes such as ```Tistory\_CATEGORY::__METHOD__(string $accessToken, array $options = []): string```.
 
-* access_token: Tistory Access Token
+* accessToken: Tistory Access Token
 * options: Tistory API request parameters
 
-### Tistory\Blog::info(string $access_token, array $options = [])
+### Categories
 
-Getting Tistory blog info
+* [Tistory\Blog](https://github.com/pronist/tistory/blob/master/src/Blog.php)
+* [Tistory\Category](https://github.com/pronist/tistory/blob/master/src/Category.php)
+* [Tistory\Post](https://github.com/pronist/tistory/blob/master/src/Post.php)
+* [Tistory\Comment](https://github.com/pronist/tistory/blob/master/src/Comment.php)
 
-#### Usage
+**Note**. When using ```Tistory\Post::attach```, Just using ```fopen``` with ```uploadedfile``` parameter. Reference [Guzzle 6](http://docs.guzzlephp.org/en/stable/request-options.html#multipart).
 
-```php
-$response = Tistory\Blog::info($access_token);
-```
+## License
 
-### Tistory\Category::list(string $access_token, array $options = [])
+[MIT](https://github.com/pronist/tistory/blob/basic/LICENSE)
 
-Getting Tistory category list
-
-#### Usage
-
-```php
-$response = Tistory\Category::list($access_token, [
-    'blogName' => 'example'
-]);
-```
-
-### Tistory\Comment::newest(string $access_token, array $options = [])
-
-Getting newest comments
-
-#### Usage
-
-```php
-$response = Tistory\Comment::newest($access_token, [
-    'blogName' => 'example',
-    'page' => '1',
-    'count' => '10'
-]);
-```
-
-### Tistory\Comment::list(string $access_token, array $options = [])
-
-Getting comments list
-
-#### Usage
-
-```php
-$response = Tistory\Comment::list($access_token, [
-    'blogName' => 'example',
-    'postId' => '1',
-]);
-```
-
-### Tistory\Comment::write(string $access_token, array $options = [])
-
-Writing a comment
-
-#### Usage
-
-```php
-$response = Tistory\Comment::write($access_token, [
-    'blogName' => 'example',
-    'page' => '1',
-    'content' => 'Hello, world!'
-]);
-```
-
-### Tistory\Comment::modify(string $access_token, array $options = [])
-
-Modifying a comment
-
-#### Usage
-
-```php
-$response = Tistory\Comment::modify($access_token, [
-    'blogName' => 'example',
-    'postId' => '1',
-    'commentId' => '1',
-    'content' => 'Hello, world!'
-]);
-```
-
-### Tistory\Comment::delete(string $access_token, array $options = [])
-
-Deleting a comment
-
-#### Usage
-
-```php
-$response = Tistory\Comment::delete($access_token, [
-    'blogName' => 'example',
-    'postId' => '1',
-    'commentId' => '1'
-]);
-```
-
-### Tistory\Post::list(string $access_token, array $options = [])
-
-Getting posts list
-
-#### Usage
-
-```php
-$response = Tistory\Post::list($access_token, [
-    'blogName' => 'example',
-    'page' => '1'
-]);
-```
-
-### Tistory\Post::read(string $access_token, array $options = [])
-
-Reading a post
-
-#### Usage
-
-```php
-$response = Tistory\Post::read($access_token, [
-    'blogName' => 'example',
-    'postId' => '1'
-]);
-```
-
-### Tistory\Post::write(string $access_token, array $options = [])
-
-Writing a post
-
-#### Usage
-
-```php
-$response = Tistory\Post::write($access_token, [
-    'blogName' => 'example',
-    'title' => 'Hello, world!'
-]);
-```
-
-### Tistory\Post::modify(string $access_token, array $options = [])
-
-Modifying a post
-
-#### Usage
-
-```php
-$response = Tistory\Post::modify($access_token, [
-    'blogName' => 'example',
-    'postId' => '1',
-    'title' => 'Hello, world!'
-]);
-```
-
-### Tistory\Post::attach(string $access_token, array $options = [])
-
-Attaching a file
-
-#### Usage
-
-```php
-$response = Tistory\Post::attach($access_token, [
-    'blogName' => 'example',
-    'uploadedfile' => fopen('preview.jpg', 'r')
-]);
-```
-
-# Reference
-
-<https://tistory.github.io/document-tistory-apis/>
+Copyright 2020. [SangWoo Jeong](https://github.com/pronist). All rights reserved.

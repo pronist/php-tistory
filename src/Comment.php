@@ -4,14 +4,7 @@ namespace Pronist\Tistory;
 
 use Pronist\Tistory\Traits\Request;
 
-/**
- * @method stdClass newest($access_token, $options = [])
- * @method stdClass list($access_token, $options = [])
- * @method stdClass write($access_token, $options = [])
- * @method stdClass modify($access_token, $options = [])
- * @method stdClass delete($access_token, $options = [])
- */
-class Comment 
+class Comment
 {
     use Request;
 
@@ -23,9 +16,9 @@ class Comment
     *
     * @return stdClass
     */
-    public static function newest(string $access_token, array $options = []) 
+    public static function newest(string $accessToken, array $options = [])
     {
-        return self::request('get', 'comment/newest', $access_token, $options);
+        return self::request('get', 'comment/newest', $accessToken, $options);
     }
 
    /**
@@ -36,9 +29,9 @@ class Comment
     *
     * @return stdClass
     */
-    public static function list(string $access_token, array $options = []) 
+    public static function list(string $accessToken, array $options = [])
     {
-        return self::request('get', 'comment/list', $access_token, $options);
+        return self::request('get', 'comment/list', $accessToken, $options);
     }
 
    /**
@@ -49,9 +42,9 @@ class Comment
     *
     * @return stdClass
     */
-    public static function write(string $access_token, array $options = []) 
+    public static function write(string $accessToken, array $options = [])
     {
-        return self::request('post', 'comment/write', $access_token, $options);
+        return self::request('post', 'comment/write', $accessToken, $options);
     }
 
    /**
@@ -62,9 +55,9 @@ class Comment
     *
     * @return stdClass
     */
-    public static function modify(string $access_token, array $options = []) 
+    public static function modify(string $accessToken, array $options = [])
     {
-        return self::request('post', 'comment/modify', $access_token, $options);
+        return self::request('post', 'comment/modify', $accessToken, $options);
     }
 
    /**
@@ -75,8 +68,8 @@ class Comment
     *
     * @return stdClass
     */
-    public static function delete(string $access_token, array $options = []) 
+    public static function delete(string $accessToken, array $options = [])
     {
-        return self::request('post', 'comment/delete', $access_token, $options);
+        return self::request('post', 'comment/delete', $accessToken, $options);
     }
 }

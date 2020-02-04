@@ -4,10 +4,7 @@ namespace Pronist\Tistory;
 
 use Pronist\Tistory\Traits\Request;
 
-/**
- * @method stdClass list($access_token, $options = [])
- */
-class Category 
+class Category
 {
     use Request;
 
@@ -18,9 +15,9 @@ class Category
     * @param array $options
     *
     * @return stdClass
-    */    
-    public static function list(string $access_token, array $options = []) 
+    */
+    public static function list(string $accessToken, array $options = [])
     {
-        return self::request('get', 'category/list', $access_token, $options);
+        return self::request('get', 'category/list', $accessToken, $options);
     }
 }
