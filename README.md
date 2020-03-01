@@ -1,7 +1,7 @@
 # Tistory API for PHP
 
 <p>
-    <img src="https://travis-ci.com/pronist/tistory.svg?branch=master">
+    <img src="https://travis-ci.com/pronist/php-tistory-api.svg?branch=master">
     <img src="https://github.styleci.io/repos/155703406/shield?branch=master" alt="StyleCI">
 </p>
 
@@ -98,6 +98,6 @@ You can use a same way associated classes like this; \
 
 ## License
 
-[MIT](https://github.com/pronist/tistory/blob/master/LICENSE)
+[MIT](https://github.com/pronist/php-tistory-api/blob/master/LICENSE)
 
 Copyright 2020. [SangWoo Jeong](https://github.com/pronist). All rights reserved.
