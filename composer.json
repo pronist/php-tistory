@@ -4,7 +4,7 @@
     "description": "Tistory API for PHP",
     "type": "library",
     "keywords": ["php", "tistory", "api"],
-    "homepage": "https://github.com/pronist/tistory",
+    "homepage": "https://github.com/tistory-project/tistory",
     "scripts": {
         "lint": "phpcs --standard=PSR12 -n src"
     },
